@@ -9,16 +9,13 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/devp01/apache-devops.git'
+                checkout scm
             }
         }
 
         stage('Build Image') {
             steps {
-                sh '''
-                  docker build -t apache-devops:${BUILD_NUMBER} .
-                '''
+                sh 'docker build -t apache-devops:${BUILD_NUMBER} .'
             }
         }
 
