@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+  triggers {
+    githubPush()
+  }
+
     environment {
         IMAGE_NAME = "dp0211/apache-devops"
     }
