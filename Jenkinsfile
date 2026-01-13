@@ -29,13 +29,20 @@ pipeline {
         }
 
         stage('Push Image') {
-            steps {
-                sh '''
-                  docker push ${IMAGE_NAME}:${BUILD_NUMBER}
-                  docker push ${IMAGE_NAME}:latest
-                '''
-            }
+
+        steps {
+            withDockerRegistry(
+            credentialsId: 'dockerhub-creds',
+            url: 'https://index.docker.io/v1/'
+        ) {
+            sh '''
+              docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+              docker push ${IMAGE_NAME}:latest
+            '''
         }
+    }
+}        
+
 
         stage('Deploy') {
             steps {
